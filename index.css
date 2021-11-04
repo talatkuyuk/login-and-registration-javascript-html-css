@@ -86,7 +86,7 @@ body {
 }
 
 .wrapper {
-	overflow: hidden;
+	overflow: visible;
 	width: 98%;
 	max-width: 400px;
 	background: #fff;
@@ -126,7 +126,7 @@ body {
 
 .wrapper .form-container {
 	width: 100%;
-	overflow: hidden;
+	overflow: visible;
 }
 
 .form-container .slide-controls {
@@ -253,8 +253,8 @@ form small {
 }
 
 form .link {
-  margin-top: 5px;
-  text-align: center;
+	margin-top: 5px;
+	text-align: center;
 }
 
 form .link a {
@@ -269,39 +269,32 @@ form .link a:hover {
 form .field-button {
 	height: 50px;
 	width: 100%;
-	border-radius: 5px;
 	margin-bottom: 20px;
 	position: relative;
-	overflow: hidden;
 }
 
-form .field-button .btn-layer {
-  height: 100%;
-  width: 300%;
-  position: absolute;
-  left: -100%;
-  background: -webkit-linear-gradient(right, var(--color-purple), var(--color-red), var(--color-purple), var(--color-red));
-  border-radius: 5px;
-  transition: all 0.4s ease;;
-}
-
-form .field-button:hover .btn-layer {
-  left: 0;
+form .field-button:hover input[type="submit"] {
+	background-position: right;
 }
 
 form .field-button input[type="submit"] {
 	height: 100%;
 	width: 100%;
-	z-index: 1;
-	position: relative;
-	background: none;
 	border: none;
 	color: #fff;
-	padding-left: 0;
 	border-radius: 5px;
 	font-size: 20px;
 	font-weight: 500;
 	cursor: pointer;
+
+	background-image: linear-gradient(to right, var(--color-purple) 0%, var(--color-red) 33%, var(--color-purple) 66%, var(--color-red) 100%);
+	background-size: 300% auto;
+	background-origin: border-box;
+	background-repeat: no-repeat;
+	background-position: left;
+	transition: all 0.6s ease;
+
+	background-color: gray;
 }
 
 

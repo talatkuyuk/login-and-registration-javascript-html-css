@@ -59,12 +59,11 @@ loginForm.addEventListener('submit', event => {
 
 	loginFormState.busy = true;
 
-	const login_button = document.querySelector("#login-submit-button");
-	login_button.disabled = true;
-	login_button.style.cursor = "auto";
-
-	const layer = document.querySelector("#layer-for-login-button");
-	layer.style.background = "#949999";
+	const loginButton = document.querySelector("#login-submit-button");
+	loginButton.disabled = true;
+	loginButton.style.cursor = "auto";
+	const initial_background = loginButton.style.background;
+	loginButton.style.background = "#949999";
 
 	const checkboxSignup = document.getElementById("radio-signup");
 	checkboxSignup.disabled = true;
@@ -97,9 +96,9 @@ loginForm.addEventListener('submit', event => {
 	})
 	.finally(() => {
 		progress_bar2.style.display = "none";
-		login_button.disabled = false;
-		login_button.style.cursor = "pointer";
-		layer.style.background = "-webkit-linear-gradient(right, var(--color-purple), var(--color-red), var(--color-purple), var(--color-red))";
+		loginButton.disabled = false;
+		loginButton.style.cursor = "pointer";
+		loginButton.style.background = initial_background;
 		checkboxSignup.disabled = false;
 		loginFormState.busy = false;
 	});
@@ -140,12 +139,11 @@ signupForm.addEventListener('submit', event => {
 
 	signupFormState.busy = true;
 
-	const signup_button = document.querySelector("#signup-submit-button");
-	signup_button.disabled = true;
-	signup_button.style.cursor = "auto";
-
-	const layer = document.querySelector("#layer-for-signup-button");
-	layer.style.background = "#949999";
+	const signupButton = document.querySelector("#signup-submit-button");
+	signupButton.disabled = true;
+	signupButton.style.cursor = "auto";
+	const initial_background = signupButton.style.background;
+	signupButton.style.background = "#949999";
 
 	const checkboxLogin = document.getElementById("radio-login");
 	checkboxLogin.disabled = true;
@@ -178,9 +176,9 @@ signupForm.addEventListener('submit', event => {
 	})
 	.finally(() => {
 		progress_bar2.style.display = "none";
-		signup_button.disabled = false;
-		signup_button.style.cursor = "pointer";
-		layer.style.background = "-webkit-linear-gradient(right, var(--color-purple), var(--color-red), var(--color-purple), var(--color-red))";
+		signupButton.disabled = false;
+		signupButton.style.cursor = "pointer";
+		signupButton.style.background = initial_background;
 		checkboxLogin.disabled = false;
 		signupFormState.busy = false;
 	});
