@@ -1,0 +1,277 @@
+
+  
+/***************  FORMS  ******************/
+
+.wrapper {
+	width: 95vw;
+	max-width: 500px;
+	padding: 2em 3em;
+	margin: 1em 0;
+	background: #fff;
+	border-radius: .5em;
+	box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+	overflow: hidden;
+}
+
+.auth-providers-wrapper {
+	position: relative;
+	display: grid;
+}
+
+.auth-providers-wrapper .auth-provider {
+	width: 100%;
+	height: 50px;
+	background-color: yellow;
+	border: 1px solid lightgray;
+	border-radius: .5em;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.auth-providers-wrapper .google-container {
+	border-bottom: none;
+	align-self: center;
+}
+
+.auth-providers-wrapper .facebook-container {
+	border-top: none;
+}
+
+.seperator {
+	width: 100%;
+	max-width: 500px;
+	margin: 5px 0;
+	border: 5px;
+	height: 4px;
+	background-image: linear-gradient(to right, transparent, #CCC, transparent);
+
+	position: relative;
+	overflow: visible;
+}
+
+.seperator::after {
+	content: "or";
+	padding: 0 20px;
+	position: absolute;
+	left: 50%;
+	top: -11px;
+	transform: translateX(-50%);
+	background: radial-gradient(circle at center, rgb(208, 68, 166)  0, transparent 100%);
+	color: white;
+	border-radius: 10px;
+}
+
+.multiple-forms-wrapper {
+	position: relative;
+}
+
+.multiple-forms-wrapper .title-container {
+	width: 200%;
+
+	display: flex;
+}
+
+.multiple-forms-wrapper .form-title {
+	width: 50%;
+	position: relative;
+	transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+
+.multiple-forms-wrapper .form-title span {
+	width: 100%;
+
+	font-size: clamp(2.4rem, 2.0vw, 2.2rem);
+	font-weight: 600;
+	text-align: center;
+
+	display: block;
+}
+
+.multiple-forms-wrapper .form-title small {
+	width: 100%;
+
+	font-size: clamp(12px, 1.2rem, 18px);
+	font-weight: 500;
+	color: var(--color-red);
+	text-align: center;
+
+	display: none;
+	position: absolute;
+	bottom: -20px;
+}
+
+.multiple-forms-wrapper  .form-container {
+	width: 100%;
+	overflow: hidden;
+}
+
+.multiple-forms-wrapper .slide-controler {
+	position: relative;
+	display: flex;
+	height: 50px;
+	width: 100%;
+	overflow: hidden;
+	margin: 30px 0 0 0;
+	justify-content: space-between;
+	border: 1px solid lightgrey;
+	border-radius: 5px;
+}
+
+.multiple-forms-wrapper .slide-controler .slide {
+	height: 100%;
+	width: 100%;
+	color: #fff;
+	font-size: 18px;
+	font-weight: 500;
+	text-align: center;
+	line-height: 48px;
+	cursor: pointer;
+	z-index: 1;
+	transition: all 0.6s ease;
+}
+
+.multiple-forms-wrapper .slide-controler label.signup {
+  color: #000;
+}
+
+.multiple-forms-wrapper .slide-controler .slider-tab {
+	position: absolute;
+	height: 100%;
+	width: 50%;
+	left: 0;
+	z-index: 0;
+	border-radius: 5px;
+	background: -webkit-linear-gradient(left, var(--color-purple), var(--color-red));
+	transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+
+.multiple-forms-wrapper input[type="radio"] {
+  display: none;
+}
+
+.multiple-forms-wrapper #radio-signup:checked ~ .slider-tab {
+  left: 50%;
+}
+
+.multiple-forms-wrapper #radio-signup:checked ~ label.signup {
+  color: #fff;
+  cursor: default;
+  user-select: none;
+}
+
+.multiple-forms-wrapper #radio-signup:checked ~ label.login {
+  color: #000;
+}
+
+.multiple-forms-wrapper #radio-login:checked ~ label.signup {
+  color: #000;
+}
+
+.multiple-forms-wrapper #radio-login:checked ~ label.login {
+  cursor: default;
+  user-select: none;
+}
+
+.multiple-forms-wrapper .form-inner-container {
+  display: flex;
+  width: 200%;
+}
+
+/************ Form ****************/
+
+.multiple-forms-wrapper form {
+  	width: 50%;
+  	transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+
+.multiple-forms-wrapper .field {
+	height: 50px;
+	width: 100%;
+	margin-top: 30px;
+}
+
+.multiple-forms-wrapper .field:first-child {
+	margin-top: 30px;
+}
+
+.multiple-forms-wrapper .field input {
+	height: 100%;
+	width: 100%;
+	outline: none;
+	padding-left: 15px;
+	border-radius: 5px;
+	border: 1px solid lightgrey;
+	border-bottom-width: 2px;
+	font-size: clamp(16px, 1.6rem, 20px);
+	transition: all 0.3s ease;
+}
+
+.multiple-forms-wrapper .field input:focus {
+	border-color: #fc83bb;
+	/* box-shadow: inset 0 0 3px #fb6aae; */
+}
+
+.multiple-forms-wrapper .field input::placeholder {
+	color: #999;
+	transition: all 0.3s ease;
+}
+
+.multiple-forms-wrapper .field input:focus::placeholder {
+  	color: #b3b3b3;
+}
+
+.multiple-forms-wrapper .field-button {
+	height: 50px;
+	width: 100%;
+	margin-bottom: 20px;
+	position: relative;
+}
+
+.multiple-forms-wrapper .field-button input[type="submit"] {
+	height: 100%;
+	width: 100%;
+	border: none;
+	color: #fff;
+	border-radius: 5px;
+	font-size: clamp(15px, 1.2rem, 20px);
+	font-weight: 500;
+	cursor: pointer;
+
+	background-image: linear-gradient(to right, var(--color-purple) 0%, var(--color-red) 33%, var(--color-purple) 66%, var(--color-red) 100%);
+	background-size: 300% auto;
+	background-origin: border-box;
+	background-repeat: no-repeat;
+	background-position: left;
+	transition: all 0.6s ease;
+}
+
+.multiple-forms-wrapper .field-button:hover input[type="submit"] {
+	background-position: right;
+}
+
+.multiple-forms-wrapper form small {
+	color: var(--color-red);
+	font-size: clamp(12px, 1.4rem, 16px);
+	margin-left: 15px;
+	margin-top: 3px;
+	line-height: 12px;
+	display: none;
+}
+
+.multiple-forms-wrapper form .link {
+	margin-top: 5px;
+
+	font-size: clamp(15px, 1.2rem, 20px);
+	text-align: center;
+}
+
+.multiple-forms-wrapper form .link a {
+	color: var(--color-red);
+	text-decoration: none;
+}
+
+.multiple-forms-wrapper form .link a:hover {
+  	text-decoration: underline;
+}

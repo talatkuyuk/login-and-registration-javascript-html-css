@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+	<title>Safemeals Authentication - Verify Email</title>
+	<link rel="stylesheet" href="/common.css">
+
+	<script src="common.js" defer></script>
+	<script src="verify_email.js" defer></script>
+</head>
+<body class="preload">
+
+	<!-- HEADER -->
+	<header>
+		<div class="header-inner-container">
+			<span class="logo">safemeals</span>
+		</div>
+	</header>
+
+	<!-- STATUS BAR -->
+	<p id="status-bar"></p>
+
+	<!-- BANNER -->
+	<div class="banner">
+		<span class="banner-message"></span>
+		<span id="close-banner" class="material-icons">clear</span>
+	</div>
+
+	<div class="main-container">
+
+		<!-- VERIFY EMAIL CONTAINER -->
+		<div class="popup-container">
+			<!-- Progress Bar -->
+			<div class="progress-bar" id="progress-bar">
+				<div></div>
+			</div>
+			<div class="popup-content">
+				<h2 class="popup-title">Please, wait !</h2>
+				<p class="popup-body">Your email is being verified ...</p>
+				<a href="login.html" class="popup-button" id="go-to-login">Go to Login Page</a>
+				<small></small>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>
