@@ -1,357 +1,511 @@
-:root {
-	--color-purple: #a445b2;
-	--color-red: #fa4299;
+
+/***************  BUSINESS CARD  ******************/
+
+.business-card {
+  width: 95vw;
+  max-width: 500px;
+  height: clamp(200px, 20rem, 280px);
+  margin-top: 1rem;
+
+  position: relative;
+  display: none;
+
+  perspective: 700px;
 }
 
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: 'Poppins', sans-serif;
+.business-card .front,
+.business-card .back {
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: clamp(12px, 1rem, 15px);
+  overflow: hidden;
+
+  position: absolute;
+  top:0;
+  left:0;
+
 }
 
-body {
-	width: 100%;
-	background: -webkit-linear-gradient(left, var(--color-purple), var(--color-red));
+.business-card .front {
+  background-color: #ffbb90;
+  color: #242424;
 
-	display: flex;
+  display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: flex-start;
-}
-
-::selection {
-	background: var(--color-red);
-	color: #fff;
-}
-
-.auth-providers-wrapper {
-	width: 98%;
-	max-width: 400px;
-	background: #fff;
-	padding: 20px 30px;
-	margin: 0 5px;
-	margin-top: 30px;
-	border-radius: 5px;
-	box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+  justify-content: center;
+  align-items: center;
   
-	position: relative;
-	display: flex;
-	flex-direction: column;
+  transition: transform 1s ease-in-out;
+  -webkit-transition: -webkit-transform 1s ease-in-out;
 }
 
-.auth-providers-wrapper .auth-provider {
-	width: 100%;
-	height: 60px;
-	
-	display: grid;
-	place-items: center;
+.business-card:hover .front {
+  transform: rotateX(180deg);
+  -webkit-transform: rotateX(180deg);
 }
 
-.google-container {
-	border: 1px solid lightgray;
-	border-bottom: none;
-	border-radius: 5px;
+.business-card .front span {
+  font-size: clamp(50px, 8rem, 100px);
 }
 
-.facebook-container {
-	border: 1px solid lightgray;
-	border-top: none;
-	border-radius: 5px;
+.business-card .front .company {
+  font-size: clamp(12px, 1.4rem, 18px);
 }
 
-.seperator {
-	width: 100%;
-	max-width: 390px;
-	margin: 30px 0;
-	border: 5px;
-	height: 4px;
-	background-image: linear-gradient(to right, transparent, #CCC, transparent);
+.business-card .front::before {
+  content: "";
+  border-radius: 50%;
+  border: 1rem solid #24242420;
+  position: absolute;
+  top: -25%;
+  height: 150%;
+  width: 50%;
 
-	position: relative;
-	overflow: visible;
+  transform: rotateZ(35deg);
+  -webkit-transform: rotateZ(35deg);
 }
 
-.seperator::after {
-	content: "or";
-	padding: 0 20px;
-	position: absolute;
-	left: 50%;
-	top: -11px;
-	transform: translateX(-50%);
-	background: radial-gradient(circle at center, rgb(208, 68, 166)  0, transparent 100%);
-	/* background-color: rgb(208, 68, 166); */
-	color: white;
-	border-radius: 10px;
+.business-card .back {
+  background-color: #242424;
+  font-size: clamp(10px, 1rem, 15px);
+  font-weight: 600;
+
+  display: grid;
+  grid-template-columns: 47% 3% 50%;
+
+  transform: rotateX(-180deg);
+  -webkit-transform: rotateX(-180deg);
+
+  transition: transform 1s ease-in-out;
+  -webkit-transition: -webkit-transform 1s ease-in-out;
 }
 
-.wrapper {
-	overflow: visible;
-	width: 98%;
-	max-width: 400px;
-	background: #fff;
-	padding: 30px;
-	margin: 0 5px 20px 5px;
-	border-radius: 5px;
-	box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+.business-card:hover .back {
+  transform: rotateX(0deg);
+  -webkit-transform: rotateX(0deg);
 
-	position: relative;
+  transition: transform 1s ease-in-out;
+  -webkit-transition: -webkit-transform 1s ease-in-out;
 }
 
-.wrapper .title-container {
-	width: 200%;
+.business-card .back .image,
+.business-card .back .info {
+  overflow: hidden;
 
-	display: flex;
+  display: flex;
+  flex-direction: column;
 }
 
-.title-container .title {
-	width: 50%;
-	font-size: 35px;
-	font-weight: 600;
-	text-align: center;
-	transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
-	/* border: 1px solid; */
-	position: relative;
+.business-card .back .image {
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  background-color: #ffbb90;
+  color: #242424;
+  padding-right: 10%;
+
+  align-items: center;
+  justify-content: center;
 }
 
-.title-container small {
-	font-size: 12px;
-	color: var(--color-red);
-	display: none;
-	position: absolute;
-	bottom: -20px;
-	text-align: center;
-	width: 100%;
+.business-card .back .image img {
+  width: 60%;
+  object-fit: cover;
+  border: 2px solid #242424;
+  border-radius: 50%;
+  padding: 4px;
 }
 
-.wrapper .form-container {
-	width: 100%;
-	overflow: visible;
+.business-card .back .image span {
+  font-size: 110%;
+  margin-top: clamp(10px, 1rem, 13px);
 }
 
-.form-container .slide-controls {
-	position: relative;
-	display: flex;
-	height: 50px;
-	width: 100%;
-	overflow: hidden;
-	margin: 30px 0 0 0;
-	justify-content: space-between;
-	border: 1px solid lightgrey;
-	border-radius: 5px;
+.business-card .back .info {
+  color: #ffbb90;
+
+  align-items: flex-start;
+  justify-content: space-evenly;
 }
 
-.slide-controls .slide {
-	height: 100%;
-	width: 100%;
-	/* background-color: #afa; */
-	color: #fff;
-	font-size: 18px;
-	font-weight: 500;
-	text-align: center;
-	line-height: 48px;
-	cursor: pointer;
-	z-index: 1;
-	transition: all 0.6s ease;
+.business-card .back .profile-attribute {
+  display: flex;
+  align-items: center;
 }
 
-.slide-controls label.signup {
-  color: #000;
+.business-card .back .material-icons {
+  margin-right: 10px;
 }
 
-.slide-controls .slider-tab {
-	position: absolute;
-	height: 100%;
-	width: 50%;
-	left: 0;
-	z-index: 0;
-	border-radius: 5px;
-	background: -webkit-linear-gradient(left, var(--color-purple), var(--color-red));
-	transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+/***************  SAFEMEALS PROFILE CARD  ******************/
+
+.safemeals-profile-card-empty,
+.safemeals-profile-card {
+    width: 95vw;
+    max-width: 500px;
+    min-height: 210px;
+    /* max-height: 250px; */
+    /* height: 20rem; */
+    margin-top: 1rem;
+    padding: 0;
+
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: clamp(12px, 1rem, 15px);
+    background-color: rgb(254, 243, 250);
+    cursor: pointer;
+
+    display: none;
+    opacity: 0;
+    position: relative;
 }
 
-input[type="radio"] {
+@media only screen and (min-width: 480px) {
+  .safemeals-profile-card-empty,
+  .safemeals-profile-card {
+    /* height: 19.2rem; */
+  }
+}
+
+.safemeals-profile-card.animate {
+    display: grid;
+    grid-template-rows: auto 1fr;
+
+    animation: animate-opacity .5s ease-in-out forwards;
+    -webkit-animation: animate-opacity .5s ease-in-out forwards;
+}
+
+.safemeals-profile-card.active {
+    border: 1px solid rgb(255, 255, 255);
+    background-color: rgb(87, 125, 249);
+}
+
+.safemeals-profile-card-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.safemeals-profile-legend {
+    padding: .3rem 1rem;
+    letter-spacing: 2px;
+    font-size: clamp(14px, 1.25rem, 16px);
+    line-height: 100%;
+    border-radius: 1rem;
+    text-align: center;
+    border: 1px solid gray;
+    background-color: rgb(242, 242, 252);
+    color: rgb(57, 79, 207);
+}
+
+.safemeals-profile-card.active .safemeals-profile-legend {
+  background-color: rgb(65, 65, 184);
+  color: white;
+}
+
+.safemeals-profile-legend > * {
+  pointer-events: none;
+}
+
+.safemeals-profile-type {
+  color: #242424;
+}
+.safemeals-profile-card.active .safemeals-profile-type {
+  color: yellow;
+}
+
+.safemeals-profile-type::before {
+    content: " (";
+}
+.safemeals-profile-type::after {
+    content: ")";
+}
+
+/******* edit ******/
+.safemeals-profile-card > .material-icons {
+  position: absolute;
+  top:0;
+  right:0;
+  transform: translate(40%, -80%);
+  border-radius: 50%;
+  border: 1px solid;
+  padding: 3px;
+  background-color: yellow;
+}
+
+.safemeals-profile-card.active > .material-icons {
+  color: rgb(65, 65, 184);
+}
+
+.safemeals-profile-card > .material-icons:hover {
+  background-color: rgb(215, 254, 197);
+
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+}
+
+/****  properties *****/
+
+.safemeals-profile-properties {
+  width: 95vw; /*it needed for safari, I set is as it is for the parent*/
+  max-width: 498px;  /*it needed for safari - hr animation margin-left trick has enlarged the box weirdly */
+  margin: 5px 0 2px 0;
+
+  display: grid;
+  grid-template-columns: 24% 22% 24% 30%;
+}
+
+.safemeals-profile-property {
+  width: 100%;
+  padding: 5px 0 2px 0;
+  font-size: clamp(14px, 1.4rem, 17px);
+  font-weight: 500;
+  color: #242424;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.safemeals-profile-card.active .safemeals-profile-property {
+  color: rgb(255, 255, 255);
+}
+
+.safemeals-profile-property.active {
+  color: #3a46f0;
+}
+.safemeals-profile-card.active .safemeals-profile-property.active {
+  color: yellow;
+}
+
+.safemeals-profile-property:not(.active):hover {
+  color: #4478e9;
+  background-color: #ebe5fc;
+
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+}
+.safemeals-profile-card.active .safemeals-profile-property:not(.active):hover {
+  color: yellow;
+  background-color: rgb(134, 159, 243);
+}
+
+.safemeals-profile-properties hr {
+  width: 100%;
+  height: 2px;
+  border: none;
+  background-color: #3a46f0;
+
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+}
+
+.safemeals-profile-card.active .safemeals-profile-properties hr {
+  background-color: yellow;
+}
+
+.safemeals-profile-property:nth-child(1).active ~ hr {
+  margin-left: 2%;
+  width: 99%;
+}
+.safemeals-profile-property:nth-child(2).active ~ hr {
+  margin-left: 102%;
+  width: 88%;
+}
+.safemeals-profile-property:nth-child(3).active ~ hr {
+  margin-left: 192%;
+  width: 99%;
+}
+.safemeals-profile-property:nth-child(4).active ~ hr {
+  margin-left: 294%;
+  width: 120%;
+}
+
+/****  values *****/
+.safemeals-profile-values {
+  min-height: 152px;
+  padding-bottom: 0 1px 1px 1px 1px;
+  /* background-color: yellow; */ 
+  display: grid;
+  place-items: center; 
+}
+.safemeals-profile-value {
+  height: 100%;
+  width: 100%;
+  padding: 0 5px 5px 5px; /* it works with flex gap workaround */
+  border-radius: 0 0 clamp(10px, 1rem, 13px) clamp(11px, 1rem, 13px);
+  border: 1px solid lightgray;
+}
+
+.safemeals-profile-value:not(.active) {
   display: none;
 }
 
-#radio-signup:checked ~ .slider-tab {
-  left: 50%;
-}
-
-#radio-signup:checked ~ label.signup {
-  color: #fff;
-  cursor: default;
-  user-select: none;
-}
-
-#radio-signup:checked ~ label.login {
-  color: #000;
-}
-
-#radio-login:checked ~ label.signup {
-  color: #000;
-}
-
-#radio-login:checked ~ label.login {
-  cursor: default;
-  user-select: none;
-}
-
-.form-container .form-inner {
+.safemeals-profile-value.active {
   display: flex;
-  width: 200%;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 }
 
-.form-inner form {
-  	width: 50%;
-  	transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+/* a workaround for flex gap in safari */
+.safemeals-profile-value > * + * { margin-left: 5px;}
+.safemeals-profile-value > * { margin-top: 5px;}
+
+.safemeals-profile-value .chip {
+  height: min-content;
+  width: fit-content;
+  padding: .4em .8em;
+  border: 1px solid rgba(241, 136, 36, 0.1);
+  border-radius: 1.5em;
+  font-size: clamp(12px, 1.3rem, 16px);
+  font-weight: 500;
+  color: white;
+  background-image: linear-gradient(0deg, #36295e, #1c1045);
+  opacity: 0;
 }
 
-form .field {
-	height: 50px;
-	width: 100%;
-	margin-top: 30px;
+.safemeals-profile-value .chip:hover {
+  color: yellow;
 }
 
-form .field:first-child {
-	margin-top: 30px;
+.safemeals-profile-value.active .chip {
+  animation: animate-opacity 1.2s ease 0.1s forwards;
+  -webkit-animation: animate-opacity 1.2s ease 0.1s forwards;
 }
 
-form .field input {
-	height: 100%;
-	width: 100%;
-	outline: none;
-	padding-left: 15px;
-	border-radius: 5px;
-	border: 1px solid lightgrey;
-	border-bottom-width: 2px;
-	font-size: 17px;
-	transition: all 0.3s ease;
+@keyframes animate-opacity {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 
-form .field input:focus {
-	border-color: #fc83bb;
-	/* box-shadow: inset 0 0 3px #fb6aae; */
+@-webkit-keyframes animate-opacity {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 
-form .field input::placeholder {
-	color: #999;
-	transition: all 0.3s ease;
+/************* Ring **************/
+
+.safemeals-profile-value.active .allergy-container {
+  animation: animate-opacity 1.2s ease 0.1s forwards;
+  -webkit-animation: animate-opacity 1.2s ease 0.1s forwards;
 }
 
-form .field input:focus::placeholder {
-  	color: #b3b3b3;
+.allergy-container {
+  height: clamp(70px, 7rem, 91px);
+  width: clamp(70px, 7rem, 91px);
+  position: relative;
+  opacity: 0;
 }
 
-form small {
-	color: var(--color-red);
-	font-size: 80%;
-	margin-left: 15px;
-	margin-top: 3px;
-	line-height: 12px;
-	display: none;
+.allergy-container .allergy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  font-size: clamp(12px, 1.3rem, 16px);
+  font-weight: 500;
+  color: white;
+  word-break: normal;
 }
 
-form .link {
-	margin-top: 5px;
-	text-align: center;
+.allergy-container:hover .allergy {
+    color: yellow;
 }
 
-form .link a {
-	color: var(--color-red);
-	text-decoration: none;
+.allergy-container .outer-ring {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(135deg, #FEED07 0%, #FE6A50 5%, #ED00AA 15%, #2FE3FE 50%, #8900FF 100%);
+  border-radius: 50%;
 }
 
-form .link a:hover {
-  	text-decoration: underline;
+.allergy-container:hover .outer-ring {
+  animation: rotateRing 2s ease infinite;
+  -webkit-animation: rotateRing 2s ease infinite;
 }
 
-form .field-button {
-	height: 50px;
-	width: 100%;
-	margin-bottom: 20px;
-	position: relative;
+.allergy-container .inner-ring {
+  height: 84%;
+  width: 84%;
+
+  background-image: linear-gradient(0deg, #36295e, #1c1045);
+  border-radius: 50%;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
 }
 
-form .field-button:hover input[type="submit"] {
-	background-position: right;
+@keyframes rotateRing {
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
 }
 
-form .field-button input[type="submit"] {
-	height: 100%;
-	width: 100%;
-	border: none;
-	color: #fff;
-	border-radius: 5px;
-	font-size: 20px;
-	font-weight: 500;
+@-webkit-keyframes rotateRing {
+  0% {-webkit-transform: rotate(0deg);}
+  100% {-webkit-transform: rotate(360deg);}
+}
+
+/***************  RESPONSE CONTAINER  ******************/
+
+.response-container {
+  width: 95vw;
+  max-width: 500px;
+  background: #fff;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 5px;
+  box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+
+  display: none;
+  flex-direction: column;
+}
+
+.response-container .title-container {
+  width: 100%;
+  margin-bottom: 1rem;
+	padding: 0 1rem;
+
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: 1px solid black;
+}
+
+.response-container .title {
+  font-size: clamp(14px, 1.4rem, 18px);
+  font-weight: 600;
+}
+
+#clear-response {
+	color:red;
+  font-size: 125%;
+}
+
+#clear-response:hover {
 	cursor: pointer;
-
-	background-image: linear-gradient(to right, var(--color-purple) 0%, var(--color-red) 33%, var(--color-purple) 66%, var(--color-red) 100%);
-	background-size: 300% auto;
-	background-origin: border-box;
-	background-repeat: no-repeat;
-	background-position: left;
-	transition: all 0.6s ease;
-
-	background-color: gray;
 }
 
-
-/* PROGRESS BAR ANIMATION */
-
-.progress-bar {
-	display: none;
-	position:absolute;
-	top:1px;
-	left:50%;
-	transform:translateX(-50%);
-	max-width: 500px;
+.json-container {
 	width: 100%;
-	height: 6px;
-	background:#acece6;
-	overflow:hidden;
+	background-color: whitesmoke;
+	border: 1px solid gray;
+	padding: 1rem;
+	overflow-y: scroll;
+  font-size: clamp(12px, 1rem, 16px);
+  overflow: hidden;
 }
 
-.progress-bar div:before {
-	content:"";
-	position:absolute;
-	top:0px;
-	left:0px;
-	bottom:0px;
-	background:#949999;
-	animation:box-1 2100ms cubic-bezier(0.65,0.81,0.73,0.4) infinite;
-}
-.progress-bar div:after {
-	content:"";
-	position:absolute;
-	top:0px;
-	left:0px;
-	bottom:0px;
-	background:#26a69a;
-	animation:box-2 2100ms cubic-bezier(0.16,0.84,0.44,1) infinite;
-	animation-delay:1150ms;
-}
-@keyframes box-1 {
-	0% {
-		left:-35%;
-		right:100%;
-	}
-
-	60%,100% {
-		left:100%;
-		right:-90%;
-	}
-}
-
-@keyframes box-2 {
-	0% {
-		left:-200%;
-		right:100%;
-	}
-	
-	60%,100% {
-		left:107%;
-		right:-8%;
-	}
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }

@@ -8,110 +8,114 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-	<title>Login and Registration Form</title>
+	<title>Safemeals Authentication - Main</title>
+	<link rel="stylesheet" href="/common.css">
 	<link rel="stylesheet" href="/index.css">
 
-	<script src="https://accounts.google.com/gsi/client" async defer></script>
-	<script src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0" async defer crossorigin="anonymous" nonce="jx3mf3IW"></script>
+	<script src="components.js"></script>
+	<script src="common.js" defer></script>
+	<script src="index.js" defer></script>
 </head>
-<body>
-	<div id="fb-root"></div>
-	<div class="auth-providers-wrapper">
-		<!-- Progress Bar -->
-		<div class="progress-bar" id="progress-bar-1">
-			<div></div>
-		</div>
-		<div class="auth-provider google-container">
-			<div id="google-signin-button"></div>
-		</div>
-		<div class="auth-provider facebook-container">
-			<div id="spinner">
-				Loading...
-			</div>
-			<div class="fb-login-button"
-				data-max-rows="1"
-				data-size="large"
-				data-button-type="continue_with" 
-				data-layout="default" 
-				data-auto-logout-link="false" 
-				data-use-continue-as="true">
+<body class="preload">
+
+	<!-- HEADER -->
+	<header>
+		<div class="header-inner-container">
+			<span class="logo">safemeals</span>
+			<div class="header-right">
+				<span class="user" id="header-email"></span>
+				<button id="logout-button">Logout</button>
 			</div>
 		</div>
-	</div>
-	<hr class="seperator">
-	<div class="wrapper">
-		<!-- Progress Bar -->
-		<div class="progress-bar" id="progress-bar-2">
-			<div></div>
-		</div>
-		<!-- Title -->
-		<div class="title-container">
-			<div class="title login">
-				Login Form
-				<small></small>
-			</div>
-			<div class="title signup">
-				Signup Form
-				<small></small>
-			</div>
-		</div>
-		<div class="form-container">
-			<!-- Slider -->
-			<div class="slide-controls">
-				<input type="radio" name="slide" id="radio-login" checked>
-				<input type="radio" name="slide" id="radio-signup">
-				<label for="radio-login" class="slide login">Login</label>
-				<label for="radio-signup" class="slide signup">Signup</label>
-				<div class="slider-tab"></div>
-			</div>
-			<!-- Forms -->
-			<div class="form-inner">
-				<form action="#" class="login" id="login-form">
-					<div class="field field-text">
-						<input type="text" name="email" placeholder="Email" id="login-email">
-						<small></small>
-					</div>
-					<div class="field field-text">
-						<input type="password" name="password" placeholder="Password" id="login-password">
-						<small></small>
-					</div>
-					<div class="field field-button">
-						<input type="submit" value="Login" id="login-submit-button">
-					</div>
-					<div class="link" id="signup-link">
-						Not a member? <a href="#">Signup now</a>
-					</div>
-					<div class="link" id="pass-link">
-						<a href="#">Forgot password?</a>
-					</div>
-				</form>
-				<form action="#" class="signup" id="signup-form">
-					<div class="field field-text">
-						<input type="text" name="email"  placeholder="Email" id="signup-email">
-						<small></small>
-					</div>
-					<div class="field field-text">
-						<input type="password" name="password" placeholder="Password" id="signup-password">
-						<small></small>
-					</div>
-					<div class="field field-text">
-						<input type="password" name="passwordConfirmation" placeholder="Confirm password" id="signup-password-confirmation">
-						<small></small>
-					</div>
-					<div class="field field-button">
-						<input type="submit" value="Signup" id="signup-submit-button">
-					</div>
-					<div class="link" id="login-link">
-						If you have already an account, <a href="#">Login</a>
-					</div>
-				</form>
-			</div>
-		</div>
+	</header>
+
+	<!-- STATUS BAR -->
+	<p id="status-bar"></p>
+
+	<!-- BANNER -->
+	<div class="banner">
+		<span class="banner-message"></span>
+		<span id="close-banner" class="material-icons">clear</span>
 	</div>
 
-	<script src="google.js"></script>
-	<script src="facebook.js"></script>
-	<script src="index.js"></script>
+	<div class="main-container">
+
+		<!-- LOADING SPINNER -->
+		<div class="loading-spinner">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+
+		<!-- BUSINESS CARD -->
+		<div class="business-card">
+			<div class="front">
+				<span class="material-icons">account_circle</span>
+				<div class="company">See Profile</div>
+			</div>
+			<div class="back">
+				<div class="image">
+					<img src="pp.jpg" alt="pp">
+					<span id="profile-name">Name</span>
+				</div>
+				<div class="empty"></div>
+				<div class="info">
+					<div class="profile-attribute">
+						<span class="material-icons">email</span>
+						<span id="profile-email">Email</span>
+					</div>
+					<div class="profile-attribute">
+						<span class="material-icons">business</span>
+						<span id="profile-role">Role</span>
+					</div>
+					<div class="profile-attribute">
+						<span class="material-icons">face</span>
+						<span id="profile-gender">Gender</span>
+					</div>
+					<div class="profile-attribute">
+						<span class="material-icons">outlined_flag</span>
+						<span id="profile-country">Country</span>
+					</div>
+					<div class="profile-attribute">
+						<span class="material-icons">verified_user</span>
+						<span id="profile-createdAt">Date</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- SAFEMEAL PROFILE CARD -->
+
+		<!-- VERIFY EMAIL CONTAINER -->
+		<div class="popup-container">
+			<!-- Progress Bar -->
+			<div class="progress-bar" id="progress-bar">
+				<div></div>
+			</div>
+			<div class="popup-content">
+				<h2 class="popup-title">Verify your email !</h2>
+				<p class="popup-body">If you could not find the verification email in your email box, you can request a new one.</p>
+				<a href="#" class="popup-button" id="send-email-button">Send Email</a>
+				<small></small>
+			</div>  
+		</div>
+		<div class="edit-container"></div>
+
+		<!-- RESPONSE CONTAINER -->
+		<div class="response-container">
+			<div class="title-container">
+				<span class="title">Server Response</span>
+				<span id="clear-response" class="material-icons">clear</span>
+			</div>
+			<div class="json-container">
+				<pre><code id="response"></code></pre>
+			</div>
+		</div>
+
+	</div>
+
 </body>
 </html>

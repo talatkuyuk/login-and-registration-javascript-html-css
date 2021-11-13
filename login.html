@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+	<title>Safemeals Authentication - Login/Signup</title>
+	<link rel="stylesheet" href="/common.css">
+	<link rel="stylesheet" href="/login.css">
+
+	<script src="https://accounts.google.com/gsi/client" async defer></script>
+	<script src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0" async defer crossorigin="anonymous" nonce="jx3mf3IW"></script>
+</head>
+<body  class="preload">
+	<div id="fb-root"></div>
+
+	<!-- HEADER -->
+	<header>
+		<div class="header-inner-container">
+			<span class="logo">safemeals</span>
+		</div>
+	</header>
+
+	<!-- STATUS BAR -->
+	<p id="status-bar"></p>
+
+	<!-- BANNER -->
+	<div class="banner">
+		<span class="banner-message"></span>
+		<span id="close-banner" class="material-icons">clear</span>
+	</div>
+
+	<div class="main-container">
+
+		<!-- AUTH PROVIDERS -->
+		<div class="wrapper auth-providers-wrapper">
+			<!-- Progress Bar -->
+			<div class="progress-bar" id="progress-bar-1">
+				<div></div>
+			</div>
+
+			<!-- Google -->
+			<div class="auth-provider google-container">
+				<div id="google-signin-button" style="width: max-content;"></div>
+			</div>
+
+			<!-- Facebook -->
+			<div class="auth-provider facebook-container">
+				<div id="spinner">
+					Loading...
+				</div>
+				<div class="fb-login-button"
+					data-max-rows="1"
+					data-size="large"
+					data-button-type="continue_with" 
+					data-layout="default" 
+					data-auto-logout-link="false" 
+					data-use-continue-as="true">
+				</div>
+			</div>
+		</div>
+
+		<!-- Seperator -->
+		<hr class="seperator">
+
+		<!-- FORMS -->
+		<div class="wrapper multiple-forms-wrapper">
+			<!-- Progress Bar -->
+			<div class="progress-bar" id="progress-bar-2">
+				<div></div>
+			</div>
+
+			<!-- Title -->
+			<div class="title-container">
+				<div class="form-title" id="title-login-form">
+					<span>Login Form</span>
+					<small></small>
+				</div>
+				<div class="form-title" id="title-signup-form">
+					<span>Signup Form</span>
+					<small></small>
+				</div>
+			</div>
+
+			<div class="form-container">
+
+				<!-- Slider -->
+				<div class="slide-controler">
+					<input type="radio" name="slide" id="radio-login" checked>
+					<input type="radio" name="slide" id="radio-signup">
+					<label for="radio-login" class="slide login">Login</label>
+					<label for="radio-signup" class="slide signup">Signup</label>
+					<div class="slider-tab"></div>
+				</div>
+
+				<!-- Forms -->
+				<div class="form-inner-container">
+					<form action="#" class="login" id="login-form">
+						<div class="field field-text">
+							<input type="text" name="email" placeholder="Email" id="login-email">
+							<small></small>
+						</div>
+						<div class="field field-text">
+							<input type="password" name="password" placeholder="Password" id="login-password">
+							<small></small>
+						</div>
+						<div class="field field-button">
+							<input type="submit" value="Login" id="login-submit-button">
+						</div>
+						<div class="link" id="signup-link">
+							Not a member? <a href="#">Signup now</a>
+						</div>
+						<div class="link" id="pass-link">
+							<a href="forgot_password.html">Forgot password?</a>
+						</div>
+					</form>
+					<form action="#" class="signup" id="signup-form">
+						<div class="field field-text">
+							<input type="text" name="email"  placeholder="Email" id="signup-email">
+							<small></small>
+						</div>
+						<div class="field field-text">
+							<input type="password" name="password" placeholder="Password" id="signup-password">
+							<small></small>
+						</div>
+						<div class="field field-text">
+							<input type="password" name="passwordConfirmation" placeholder="Confirm password" id="signup-passwordConfirmation">
+							<small></small>
+						</div>
+						<div class="field field-button">
+							<input type="submit" value="Signup" id="signup-submit-button">
+						</div>
+						<div class="link" id="login-link">
+							If you have already an account, <a href="#">Login</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="google.js"></script>
+	<script src="facebook.js"></script>
+	<script src="common.js"></script>
+	<script src="login.js"></script>
+</body>
+</html>
