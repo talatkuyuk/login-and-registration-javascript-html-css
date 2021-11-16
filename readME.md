@@ -1,1 +1,1 @@
-http-server -S -C server.crt -K server.decrypted.key -a localhost -p 5500 -c-1
+http-server -S -C ssl/server.crt -K ssl/server.decrypted.key -a localhost -p 5500 -c-1
