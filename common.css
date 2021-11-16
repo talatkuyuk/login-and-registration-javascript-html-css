@@ -304,7 +304,7 @@ select {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;       /* Remove default arrow */
-	background-image: url(arrow-down.png);   /* Add custom arrow */
+	background-image: url(images/arrow-down.png);   /* Add custom arrow */
 	background-repeat: no-repeat;
 	background-position: right;
 
