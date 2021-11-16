@@ -1,3 +1,5 @@
+const api_base_url = "https://authouse.herokuapp.com";
+
 async function pureFetch ({ ops, link, method, headers, body}) {
 	try {
 		let response = await fetch(link, {
@@ -81,7 +83,7 @@ async function secureFetch ({ ops, link, method, tokens, headers, body}) {
 async function refreshTokens (tokens) {
 	const data = await pureFetch({
 		ops: "refresh tokens",
-		link: 'https://localhost:8443/auth/refresh-tokens',
+		link: `${api_base_url}/auth/refresh-tokens`,
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

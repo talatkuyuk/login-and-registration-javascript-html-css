@@ -47,7 +47,7 @@ resetpasswordForm.addEventListener('submit', async (event) => {
 
 		const data = await pureFetch({
 			ops: "forgot password",
-			link: 'https://localhost:8443/auth/reset-password',
+			link: `${api_base_url}/auth/reset-password`,
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
