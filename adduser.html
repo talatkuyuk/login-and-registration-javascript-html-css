@@ -13,6 +13,7 @@
 	<title>Safemeals Authentication - Create Profile</title>
 	<link rel="stylesheet" href="/common.css">
 
+	<script src="components.js"></script>
 	<script src="common.js" defer></script>
 	<script src="adduser.js" defer></script>
 </head>
@@ -58,7 +59,7 @@
 						<input type="text" name="email" id="adduser-email">
 						<small></small>
 					</div>
-					<div class="field field-text">
+					<div class="field field-text" hidden>
 						<input type="text" name="role" id="adduser-role">
 						<small></small>
 					</div>
@@ -66,12 +67,17 @@
 						<input type="text" name="name"  placeholder="Name" id="adduser-name">
 						<small></small>
 					</div>
-					<div class="field field-text">
-						<input type="text" name="gender" placeholder="Gender" id="adduser-gender">
+					<div class="field field-select">
+						<select name="gender" id="adduser-gender" autocomplete="off">
+							<option value="" selected>Select a gender</option>
+							<option value="male">Male</option>
+							<option value="female">Female</option>
+							<option value="none">Prefer not to specify</option>
+						</select>
 						<small></small>
 					</div>
-					<div class="field field-text">
-						<input type="text" name="country" placeholder="Country" id="adduser-country">
+					<div class="field field-select">
+						<select name="country" id="adduser-country" autocomplete="off"></select>
 						<small></small>
 					</div>
 					<div class="field field-button">

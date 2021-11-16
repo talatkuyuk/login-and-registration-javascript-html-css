@@ -1,4 +1,4 @@
-@import url('normalize.css');
+@import url('./normalize.css');
 
 :root {
 	--color-purple: #a445b2;
@@ -255,6 +255,7 @@ header {
 	margin-top: 3rem;
 }
 
+.single-form-wrapper .field select,
 .single-form-wrapper .field input {
 	height: 100%;
 	width: 100%;
@@ -264,7 +265,9 @@ header {
 	border: 1px solid rgb(172, 139, 139);
 	border-bottom-width: 2px;
 	font-size: clamp(14px, 1.6rem, 22px);
+}
 
+.single-form-wrapper .field input {
 	-webkit-transition: all 0.3s ease;
 	-moz-transition: all 0.3s ease;
 	-ms-transition: all 0.3s ease;
@@ -295,6 +298,20 @@ header {
 	color: var(--color-red);
 	font-size: clamp(12px, 1.2rem, 18px);
 	display: none;
+}
+
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;       /* Remove default arrow */
+	background-image: url(arrow-down.png);   /* Add custom arrow */
+	background-repeat: no-repeat;
+	background-position: right;
+
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+	user-select: none;
 }
 
 .single-form-wrapper .field-button {

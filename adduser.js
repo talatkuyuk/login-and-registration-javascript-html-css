@@ -57,6 +57,13 @@ window.addEventListener('load', async (event) => {
 		input_role.value = "user";
 		input_role.disabled = true;
 
+		const input_gender = document.querySelector("#adduser-gender")
+		input_gender.style.color = "#999";
+
+		const input_country = document.querySelector("#adduser-country")
+		input_country.style.color = "#999";
+		input_country.innerHTML = country_list_combobox_options;
+
 		adduserFormState.values.email = authuser.email;
 		adduserFormState.values.role = "user";
 
@@ -124,6 +131,24 @@ document.querySelectorAll('#adduser-form .field-text input').forEach( field => {
 	});
 });
 
+document.querySelectorAll('#adduser-form .field-select select').forEach( field => {
+	field.addEventListener('change', event => {
+		console.log(event.target.name, ": ", event.target.value);
+		adduserFormState.values[event.target.name] = event.target.value;
+		if (event.target.value === "") {
+			event.target.style.color = "#999";
+		} else {
+			event.target.style.color = "initial";
+		}
+	});
+	field.addEventListener('focus', event => {
+		const field_error = adduserForm.querySelector(`select[name=${event.target.name}] + small`);
+		field_error.style.display = "none";
+		const form_error = document.querySelector('.form-title small');
+		form_error.style.display = "none";
+	});
+});
+
 // **************** UTILS *********************
 
 function handleValidationErrors(data) {
@@ -133,6 +158,11 @@ function handleValidationErrors(data) {
 			const form_error = document.querySelector(`.form-title > small`);
 			form_error.innerText += data.errors[name];
 			form_error.style.display = "block";
+
+		} else if (name === "country" || name === "gender") {
+			const field_error = adduserForm.querySelector(`select[name=${name}] + small`);
+			field_error.innerText = data.errors[name];
+			field_error.style.display = "block";
 
 		} else {
 			const field_error = adduserForm.querySelector(`input[name=${name}] + small`);
@@ -151,7 +181,7 @@ function handleError(data) {
 function handleData(data) {
 	store.user = data;
 	localStorage.setItem('data', JSON.stringify(store));
-	window.location.assign("https://localhost:5500/index.html?from=adduser");
+	window.location.assign(`/index.html?from=adduser`);
 }
 
 function clearErrors() {
