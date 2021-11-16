@@ -19,7 +19,7 @@ window.addEventListener('load', async (event) => {
 
 		const data = await pureFetch({
 			ops: "verify email",
-			link: 'https://localhost:8443/auth/verify-email',
+			link: `${api_base_url}/auth/verify-email`,
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

@@ -43,7 +43,7 @@ window.addEventListener('load', async (event) => {
 			//removeSpinner();return;
 			const data = await secureFetch({
 				ops: "get authuser",
-				link: `https://localhost:8443/authusers/${store.authuser.id}`,
+				link: `${api_base_url}/authusers/${store.authuser.id}`,
 				method: 'GET',
 				tokens: store.tokens,
 				headers: {
@@ -68,7 +68,7 @@ window.addEventListener('load', async (event) => {
 
 			const data2 = await secureFetch({
 				ops: "get user",
-				link: `https://localhost:8443/users/${authuser.id}`,
+				link: `${api_base_url}/users/${authuser.id}`,
 				method: 'GET',
 				tokens: store.tokens,
 				headers: {
@@ -125,7 +125,7 @@ window.addEventListener('load', async (event) => {
 
 			const data = await secureFetch({
 				ops: "get user",
-				link: `https://localhost:8443/users/${authuser.id}`,
+				link: `${api_base_url}/users/${authuser.id}`,
 				method: 'GET',
 				tokens: store.tokens,
 				headers: {
@@ -188,7 +188,7 @@ emailButton.addEventListener('click', async (event) => {
 
 		const data = await secureFetch({
 			ops: "send verification email",
-			link: 'https://localhost:8443/auth/send-verification-email',
+			link: `${api_base_url}/auth/send-verification-email`,
 			method: 'POST',
 			tokens: store.tokens,
 			headers: {

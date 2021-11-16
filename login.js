@@ -70,7 +70,7 @@ loginForm.addEventListener('submit', async (event) => {
 
 		const data = await pureFetch({
 			ops: "login",
-			link: 'https://localhost:8443/auth/login',
+			link: `${api_base_url}/auth/login`,
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ signupForm.addEventListener('submit', async (event) => {
 
 		const data = await pureFetch({
 			ops: "signup",
-			link: 'https://localhost:8443/auth/signup',
+			link: `${api_base_url}/auth/signup`,
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -237,7 +237,7 @@ const sendTokenToBackend = async (token, provider, method, from) => {
 
 	var xhr = new XMLHttpRequest();
 
-	xhr.open('POST', `https://localhost:8443/auth/${provider}`);
+	xhr.open('POST', `${api_base_url}/auth/${provider}`);
 
 	showProgressBar("progress-bar-1");
 

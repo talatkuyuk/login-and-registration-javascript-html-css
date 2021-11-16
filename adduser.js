@@ -87,7 +87,7 @@ adduserForm.addEventListener('submit', async (event) => {
 
 		const data = await secureFetch({
 			ops: "add user",
-			link: `https://localhost:8443/users/${store.authuser.id}`,
+			link: `${api_base_url}/users/${store.authuser.id}`,
 			method: 'POST',
 			tokens: store.tokens,
 			headers: {

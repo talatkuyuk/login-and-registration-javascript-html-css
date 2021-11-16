@@ -40,7 +40,7 @@ forgotpasswordForm.addEventListener('submit', async (event) => {
 
 		const data = await pureFetch({
 			ops: "forgot password",
-			link: 'https://localhost:8443/auth/forgot-password',
+			link: `${api_base_url}/auth/forgot-password`,
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
