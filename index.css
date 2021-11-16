@@ -145,8 +145,6 @@
     width: 95vw;
     max-width: 500px;
     min-height: 210px;
-    /* max-height: 250px; */
-    /* height: 20rem; */
     margin-top: 1rem;
     padding: 0;
 
@@ -158,13 +156,6 @@
     display: none;
     opacity: 0;
     position: relative;
-}
-
-@media only screen and (min-width: 480px) {
-  .safemeals-profile-card-empty,
-  .safemeals-profile-card {
-    /* height: 19.2rem; */
-  }
 }
 
 .safemeals-profile-card.animate {
@@ -215,10 +206,10 @@
 }
 
 .safemeals-profile-type::before {
-    content: " (";
+  content: " (";
 }
 .safemeals-profile-type::after {
-    content: ")";
+  content: ")";
 }
 
 /******* edit ******/
@@ -503,9 +494,9 @@
 }
 
 pre {
-    white-space: pre-wrap;       /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-    white-space: -pre-wrap;      /* Opera 4-6 */
-    white-space: -o-pre-wrap;    /* Opera 7 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }

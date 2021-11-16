@@ -15,32 +15,6 @@ const dislike_list = ["Garlic", "Bacon", "Onion", "Domatos", "Lemon", "Crema", "
 
 const preference_list = ["Kosher", "Vegeterian", "Vegan", "Halal", "Chinese food", "Italian food", "Indian Kitchen", "Greek food", "Turkish food"];
 
-function getRandomElements(arr, max) {
-	let len = arr.length;
-	let n = Math.floor(Math.random() * (max===undefined?len:max) + 1);
-    const result = new Array(n);
-    const taken = new Array(len);
-    if (n > len)
-        throw new RangeError("getRandom: more elements taken than available");
-    while (n--) {
-        var x = Math.floor(Math.random() * len);
-        result[n] = arr[x in taken ? taken[x] : x];
-        taken[x] = --len in taken ? taken[len] : len;
-    }
-    return result;
-}
-
-function stringToElement(string) {
-    var parser = new DOMParser(),
-    content = 'text/html',
-    DOM = parser.parseFromString(string, content);
-    return DOM.body.childNodes[0];
-}
-
-function insertAfter(newNode, referenceNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-}
-
 
 window.addEventListener('load', async (event) => {
 	try {
@@ -269,6 +243,8 @@ async function showBusinessCard(user) {
 		if (element) {
 			if (key === "createdAt") {
 				element.innerText = new Date(+user[key]).toLocaleDateString();
+			} else if (key === "country") {
+				element.innerText = countries[user[key]];
 			} else {
 				element.innerText = user[key]
 			}

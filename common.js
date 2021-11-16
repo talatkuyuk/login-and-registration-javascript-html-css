@@ -105,7 +105,7 @@ async function refreshTokens (tokens) {
 async function gotoLoginPage({ delay }) {
 	localStorage.clear();
 
-	const go = () => window.location.replace("https://localhost:5500/login.html");
+	const go = () => window.location.replace(`/login.html`);
 
 	if (delay)
 		await new Promise(resolve => setTimeout(resolve, 5000)).then(() => go());
@@ -117,7 +117,7 @@ function gotoPage(destination, isSave) {
 	if (isSave) {
 		localStorage.setItem('data', JSON.stringify(store));
 	}
-	window.location.replace(`https://localhost:5500/${destination}?from=index`);
+	window.location.replace(`/${destination}?from=index`);
 }
 
 
@@ -172,6 +172,32 @@ function showSpinner() {
 function removeSpinner() {
 	const loading_spinner = document.querySelector(".loading-spinner");
 	loading_spinner && (loading_spinner.style.display = "none");
+}
+
+function getRandomElements(arr, max) {
+	let len = arr.length;
+	let n = Math.floor(Math.random() * (max===undefined?len:max) + 1);
+    const result = new Array(n);
+    const taken = new Array(len);
+    if (n > len)
+        throw new RangeError("getRandom: more elements taken than available");
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len in taken ? taken[len] : len;
+    }
+    return result;
+}
+
+function stringToElement(string) {
+    var parser = new DOMParser(),
+    content = 'text/html',
+    DOM = parser.parseFromString(string, content);
+    return DOM.body.childNodes[0];
+}
+
+function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
 

@@ -213,7 +213,7 @@ function handleData(from, data) {
 	store.authuser = data.user;
 	store.tokens = data.tokens;
 	localStorage.setItem('data', JSON.stringify(store));
-	window.location.assign(`https://localhost:5500/index.html?from=${from}`);
+	window.location.assign(`/index.html?from=${from}`);
 }
 
 function decodeJwtResponse(token) {
