@@ -183,7 +183,3 @@ function handleData(data) {
 	localStorage.setItem('data', JSON.stringify(store));
 	window.location.assign(`/index.html?from=adduser`);
 }
-
-function clearErrors() {
-	document.querySelectorAll("small").forEach((small) => small.innerText = "");
-}

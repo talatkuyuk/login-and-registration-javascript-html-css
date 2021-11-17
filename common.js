@@ -115,11 +115,12 @@ async function gotoLoginPage({ delay }) {
 		go();
 }
 
-function gotoPage(destination, isSave) {
-	if (isSave) {
-		localStorage.setItem('data', JSON.stringify(store));
-	}
-	window.location.replace(`/${destination}?from=index`);
+function gotoPage(path) {
+	window.location.replace(`/${path}`);
+}
+
+function saveState() {
+	localStorage.setItem('data', JSON.stringify(store));
 }
 
 
@@ -174,6 +175,10 @@ function showSpinner() {
 function removeSpinner() {
 	const loading_spinner = document.querySelector(".loading-spinner");
 	loading_spinner && (loading_spinner.style.display = "none");
+}
+
+function clearErrors() {
+	document.querySelectorAll("small").forEach((small) => small.innerText = "");
 }
 
 function getRandomElements(arr, max) {

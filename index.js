@@ -59,7 +59,6 @@ window.addEventListener('load', async (event) => {
 			}
 
 			authuser = data;
-			showEmailInHeader(authuser.email);
 
 			if (! authuser.isEmailVerified) {
 				showVerifyEmailContainer();
@@ -78,7 +77,8 @@ window.addEventListener('load', async (event) => {
 			
 			// if there is no user
 			if (data2.code === 404) {
-				gotoPage("adduser.html", true);
+				saveState();
+				gotoPage("adduser.html?from=index");
 				return;
 
 			// check the response is an error
@@ -92,6 +92,7 @@ window.addEventListener('load', async (event) => {
 			localStorage.setItem('data', JSON.stringify(store));
 			console.log(store);
 
+			showEmailInHeader(authuser.email);
 			showBusinessCard(data2);
 			return;
 		}
@@ -102,26 +103,34 @@ window.addEventListener('load', async (event) => {
 			authuser = store.authuser;
 			user = store.user;
 
-			showEmailInHeader(authuser.email);
-
 			if (! authuser.isEmailVerified) {
 				showVerifyEmailContainer();
 				return;
 			}
 
+			showEmailInHeader(authuser.email);
+			showBusinessCard(user);
+			return;
+		}
+
+		if (from === "updateuser") {
+
+			user = store.user;
+
+			showEmailInHeader(user.email);
 			showBusinessCard(user);
 			return;
 		}
 
 
 		if (from === "signup") {
-			gotoPage("adduser.html", true);
+			saveState();
+			gotoPage("adduser.html?from=index");
 			return;
 		}
 
 		if (from === "login") {
 			authuser = store.authuser;
-			showEmailInHeader(authuser.email);
 
 			const data = await secureFetch({
 				ops: "get user",
@@ -135,7 +144,8 @@ window.addEventListener('load', async (event) => {
 
 			// if there is no user
 			if (data.code === 404) {
-				gotoPage("adduser.html", true);
+				saveState();
+				gotoPage("adduser.html?from=index");
 				return;
 	
 			// check the response is an error
@@ -154,6 +164,7 @@ window.addEventListener('load', async (event) => {
 			localStorage.setItem('data', JSON.stringify(store));
 			console.log(store);
 
+			showEmailInHeader(authuser.email);
 			showBusinessCard(data);
 			return;
 		}
