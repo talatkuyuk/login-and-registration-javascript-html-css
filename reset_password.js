@@ -29,11 +29,10 @@ window.addEventListener('load', async (event) => {
 const okButton = document.querySelector("#resetpassword-simple-button");
 okButton.addEventListener("click", () => {
 	gotoLoginPage({ delay: false });
-})
+});
 
 resetpasswordForm.addEventListener('submit', async (event) => {
 	const resetpasswordButton = document.querySelector("#resetpassword-submit-button");
-	const form_error = document.querySelector(`.form-title > small`);
 
 	try {
 		event.preventDefault();
@@ -64,12 +63,7 @@ resetpasswordForm.addEventListener('submit', async (event) => {
 		} else if (data.code) {
 			handleError(data);
 		} else {
-			resetpasswordButton.style.display = "none";
-			okButton.style.display = "initial";
-
-			form_error.innerText = "The new password is set. Go to login page.";
-			form_error.classList.add("success");
-			form_error.style.display = "block";
+			handleData();
 		}
 		
 	} catch (error) {
@@ -128,6 +122,18 @@ function handleError(data) {
 	if (data.message.includes("jwt") || data.message.includes("signature") || data.message.includes("not valid")) {
 		showBanner({message: "You can claim a new reset password link through the forgot password feature."});
 	}
+}
+
+function handleData() {
+	const form_error = document.querySelector(`.form-title > small`);
+	const resetpasswordButton = document.querySelector("#resetpassword-submit-button");
+
+	resetpasswordButton.style.display = "none";
+	okButton.style.display = "initial";
+
+	form_error.innerText = "The new password is set. Go to login page.";
+	form_error.classList.add("success");
+	form_error.style.display = "block";
 }
 
 function clearErrors() {

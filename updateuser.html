@@ -10,11 +10,12 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-	<title>Safemeals Authentication - Forgot Password</title>
+	<title>Safemeals Authentication - Create Profile</title>
 	<link rel="stylesheet" href="/common.css">
 
+	<script src="components.js"></script>
 	<script src="common.js" defer></script>
-	<script src="forgot_password.js" defer></script>
+	<script src="updateuser.js" defer></script>
 </head>
 <body class="preload">
 
@@ -22,6 +23,10 @@
 	<header>
 		<div class="header-inner-container">
 			<a href="/index.html"><span class="logo">safemeals</span></a>
+			<div class="header-right">
+				<span class="user" id="header-email"></span>
+				<button id="logout-button">Logout</button>
+			</div>
 		</div>
 	</header>
 
@@ -35,8 +40,8 @@
 	</div>
 
 	<div class="main-container">
-
-		<!-- FORGOT PASSWORD FORM -->
+		
+		<!-- ADD USER FORM -->
 		<div class="single-form-wrapper">
 			<!-- Progress Bar -->
 			<div class="progress-bar" id="progress-bar">
@@ -44,19 +49,40 @@
 			</div>
 			<!-- Title -->
 			<div class="form-title">
-				<span>Forgot Password</span> 
+				<span>Update Profile</span> 
 				<small></small>
 			</div>
 			<div class="form-container">
 				<!-- Form -->
-				<form action="#" id="forgotpassword-form">
+				<form action="#" id="updateuser-form">
 					<div class="field field-text">
-						<input type="text" name="email" placeholder="Input your email" id="forgotpassword-email">
+						<input type="text" name="email" id="updateuser-email">
+						<small></small>
+					</div>
+					<div class="field field-text" hidden>
+						<input type="text" name="role" id="updateuser-role">
+						<small></small>
+					</div>
+					<div class="field field-text">
+						<input type="text" name="name" placeholder="Name" id="updateuser-name">
+						<small></small>
+					</div>
+					<div class="field field-select">
+						<select name="gender" id="updateuser-gender" autocomplete="off">
+							<option value="" selected>Select a gender</option>
+							<option value="male">Male</option>
+							<option value="female">Female</option>
+							<option value="none">Prefer not to specify</option>
+						</select>
+						<small></small>
+					</div>
+					<div class="field field-select">
+						<select name="country" id="updateuser-country" autocomplete="off"></select>
 						<small></small>
 					</div>
 					<div class="field field-button">
-						<input type="submit" value="Send" id="forgotpassword-submit-button">
-						<input type="button" value="Ok" id="forgotpassword-simple-button">
+						<input type="submit" value="Update" id="updateuser-submit-button">
+						<input type="button" value="Ok" id="resetpassword-simple-button">
 					</div>
 				</form>
 			</div>

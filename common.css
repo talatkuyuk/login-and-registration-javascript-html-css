@@ -69,6 +69,11 @@ header {
 	align-items: center;
 }
 
+header a {
+	color: rgb(250, 249, 249);
+	text-decoration: none;
+}
+
 #header-email {
   	font-size: 1.2rem;
 }
@@ -304,14 +309,20 @@ select {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;       /* Remove default arrow */
+
+	background: #fff;
+
 	background-image: url(images/arrow-down.png);   /* Add custom arrow */
 	background-repeat: no-repeat;
 	background-position: right;
 
-
     -webkit-user-select: none;
     -moz-user-select: none;
 	user-select: none;
+}
+
+select:disabled {
+	color: #000;
 }
 
 .single-form-wrapper .field-button {
