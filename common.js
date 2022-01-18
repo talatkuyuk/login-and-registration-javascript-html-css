@@ -2,7 +2,7 @@ const taburl = window.location.href;
 
 if (taburl.includes("localhost"))
 	var api_base_url = "https://localhost:8443";
-if (taburl.includes("herokuapp"))
+if (taburl.includes("netlify"))
 	var api_base_url = "https://authouse.herokuapp.com";
 
 async function pureFetch ({ ops, link, method, headers, body}) {
