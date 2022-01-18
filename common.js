@@ -1,5 +1,9 @@
-// const api_base_url = "https://authouse.herokuapp.com";
-const api_base_url = "https://localhost:8443";
+const taburl = window.location.href;
+
+if (taburl.includes("localhost"))
+	var api_base_url = "https://localhost:8443";
+if (taburl.includes("herokuapp"))
+	var api_base_url = "https://authouse.herokuapp.com";
 
 async function pureFetch ({ ops, link, method, headers, body}) {
 	try {
