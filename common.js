@@ -50,16 +50,16 @@ async function secureFetch ({ ops, link, method, tokens, headers, body}) {
 		console.log(data);
 	
 		if (!data.success && data.error.name === "TokenExpiredError") {
-			const result = await refreshTokens(tokens);
-	
-			if (!result.success) return result.error;
+			const result = await refreshTokens(tokens.refresh.token);
+
+			if (!result.success) return result;
 	
 			response = await fetch(link, {
 				method,
 				...(headers && {
 					headers: {
 						...headers,
-						'Authorization': `Bearer ${result.access.token}`
+						'Authorization': `Bearer ${result.data.tokens.access.token}`
 					} 
 				}),
 				...(body && {
@@ -83,7 +83,7 @@ async function secureFetch ({ ops, link, method, tokens, headers, body}) {
 }
 
 
-async function refreshTokens (tokens) {
+async function refreshTokens(refreshToken) {
 	const response = await pureFetch({
 		ops: "refresh tokens",
 		link: `${api_base_url}/auth/refresh-tokens`,
@@ -91,17 +91,15 @@ async function refreshTokens (tokens) {
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: { refreshToken: tokens.refresh.token },
+		body: { refreshToken },
 	});
 
-	if (!response.success) {
-		return response.error;
+	if (!response.success) return response;
 
-	} else {
-		store.tokens = response.data.tokens;
-		localStorage.setItem('data', JSON.stringify(store));
-		return response.data.tokens;
-	}
+	store.tokens = response.data.tokens;
+	localStorage.setItem('data', JSON.stringify(store));
+
+	return response;
 }
 
 
