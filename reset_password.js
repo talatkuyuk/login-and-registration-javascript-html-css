@@ -44,7 +44,7 @@ resetpasswordForm.addEventListener('submit', async (event) => {
 		showProgressBar();
 		resetpasswordButton.disabled = true;
 
-		const data = await pureFetch({
+		const response = await pureFetch({
 			ops: "forgot password",
 			link: `${api_base_url}/auth/reset-password`,
 			method: 'POST',
@@ -54,16 +54,16 @@ resetpasswordForm.addEventListener('submit', async (event) => {
 			body: resetpasswordFormState.values,
 		});
 
-		if (data.code === 403 || data.code === 404) {
-			showBanner(data);
-			handleError(data);
-			gotoLoginPage({ delay: true });
-		} else if (data.code === 422) {
-			handleValidationErrors(data);
-		} else if (data.code) {
-			handleError(data);
-		} else {
+		if (response.success) {
 			handleData();
+		} else if (response.error.code === 403 || response.error.code === 404) {
+			showBanner(response.error);
+			handleError(response.error);
+			gotoLoginPage({ delay: true });
+		} else if (response.error.code === 422) {
+			handleValidationErrors(response.error);
+		} else {
+			handleError(response.error);
 		}
 		
 	} catch (error) {
@@ -92,34 +92,34 @@ document.querySelectorAll('#resetpassword-form .field-text input').forEach( fiel
 
 // **************** UTILS *********************
 
-function handleValidationErrors(data) {
-	Object.keys(data.errors).forEach(name => {
-		console.log(name)
-		if (name === "body" || name === "token") {
+function handleValidationErrors(error) {
+	Object.keys(error.errors).forEach(key => {
+		console.log(key)
+		if (key === "body" || key === "token") {
 			const form_error = document.querySelector(`.form-title > small`);
-			form_error.innerText += data.errors[name];
+			form_error.innerText += error.errors[key];
 			form_error.style.display = "block";
 
 		} else {
-			const field_error = resetpasswordForm.querySelector(`input[name=${name}] + small`);
-			field_error.innerText = data.errors[name];
+			const field_error = resetpasswordForm.querySelector(`input[name=${key}] + small`);
+			field_error.innerText = error.errors[key];
 			field_error.style.display = "block";
 		}
 	})
 }
 
-function handleError(data) {
+function handleError(error) {
 	const form_error = document.querySelector(".form-title > small")
-	if (data.message.includes("expired")) {
+	if (error.message.includes("expired")) {
 		form_error.innerText = "The token is expired";
-	} else if (data.message.includes("jwt") || data.message.includes("signature")) {
+	} else if (error.message.includes("jwt") || error.message.includes("signature")) {
 		form_error.innerText = "The token is wrong";
 	} else {
-		form_error.innerText = data.message;
+		form_error.innerText = error.message;
 	}
 	form_error.style.display = "block";
 
-	if (data.message.includes("jwt") || data.message.includes("signature") || data.message.includes("not valid")) {
+	if (error.message.includes("jwt") || error.message.includes("signature") || error.message.includes("not valid")) {
 		showBanner({message: "You can claim a new reset password link through the forgot password feature."});
 	}
 }

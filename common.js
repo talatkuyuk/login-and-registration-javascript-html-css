@@ -1,13 +1,12 @@
-const api_base_url = "https://authouse.herokuapp.com";
+// const api_base_url = "https://authouse.herokuapp.com";
+const api_base_url = "https://localhost:8443";
 
 async function pureFetch ({ ops, link, method, headers, body}) {
 	try {
 		let response = await fetch(link, {
 			method,
-			headers,
-			...(body && {
-				body: JSON.stringify(body),
-			}),
+			...(headers && { headers }),
+			...(body && { body: JSON.stringify(body) }),
 		});
 	
 		const text = await response.text();
@@ -33,7 +32,7 @@ async function secureFetch ({ ops, link, method, tokens, headers, body}) {
 				headers: {
 					...headers,
 					'Authorization': `Bearer ${tokens.access.token}`
-				} 
+				}
 			}),
 			...(body && {
 				body: JSON.stringify(body),
@@ -46,10 +45,10 @@ async function secureFetch ({ ops, link, method, tokens, headers, body}) {
 		console.log(`secureFetch: first try (${ops})`);
 		console.log(data);
 	
-		if (data.name === "TokenExpiredError") {
+		if (!data.success && data.error.name === "TokenExpiredError") {
 			const result = await refreshTokens(tokens);
 	
-			if (result.code) return result;
+			if (!result.success) return result.error;
 	
 			response = await fetch(link, {
 				method,
@@ -81,7 +80,7 @@ async function secureFetch ({ ops, link, method, tokens, headers, body}) {
 
 
 async function refreshTokens (tokens) {
-	const data = await pureFetch({
+	const response = await pureFetch({
 		ops: "refresh tokens",
 		link: `${api_base_url}/auth/refresh-tokens`,
 		method: 'POST',
@@ -91,13 +90,13 @@ async function refreshTokens (tokens) {
 		body: { refreshToken: tokens.refresh.token },
 	});
 
-	if (data.code) {
-		return data;
+	if (!response.success) {
+		return response.error;
 
 	} else {
-		store.tokens = data;
+		store.tokens = response.data.tokens;
 		localStorage.setItem('data', JSON.stringify(store));
-		return data;
+		return response.data.tokens;
 	}
 }
 
@@ -126,13 +125,13 @@ function saveState() {
 
 // ***********  UTILS  *******************
 
-function showBanner(data) {
+function showBanner(error) {
 	const banner = document.querySelector(".banner");
 	const bannerMessage = document.querySelector(".banner-message");
 
-	bannerMessage.innerText =  data.code === 422
-		? data.errors.refreshToken
-		: bannerMessage.innerText = data.message;
+	bannerMessage.innerText =  error.code === 422
+		? error.errors.refreshToken
+		: bannerMessage.innerText = error.message;
 	
 	banner.classList.add("show");
 }

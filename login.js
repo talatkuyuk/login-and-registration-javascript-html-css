@@ -68,7 +68,7 @@ loginForm.addEventListener('submit', async (event) => {
 		radioSignup.disabled = true;
 		showProgressBar("progress-bar-2");
 
-		const data = await pureFetch({
+		const response = await pureFetch({
 			ops: "login",
 			link: `${api_base_url}/auth/login`,
 			method: 'POST',
@@ -77,17 +77,17 @@ loginForm.addEventListener('submit', async (event) => {
 			},
 			body: loginFormState.values,
 		});
-	
-		if (data.code === 403) {
-			showBanner(data);
+
+		if (response.success) {
+			handleData("login", response.data);
+		} else if (response.error.code === 403) {
+			showBanner(response.error);
 			removeProgressBar("progress-bar-2");
-			handleError(titleLoginForm, data);
-		} else if (data.code === 422) {
-			handleValidationErrors(loginForm, data);
-		} else if (data.code >= 400) {
-			handleError(titleLoginForm, data);
-		} else {
-			handleData("login", data);
+			handleError(titleLoginForm, response.error);
+		} else if (response.error.code === 422) {
+			handleValidationErrors(loginForm, response.error);
+		} else if (response.error.code >= 400) {
+			handleError(titleLoginForm, response.error);
 		}
 		
 	} catch (error) {
@@ -135,7 +135,7 @@ signupForm.addEventListener('submit', async (event) => {
 		radioLogin.disabled = true;
 		showProgressBar("progress-bar-2");
 
-		const data = await pureFetch({
+		const response = await pureFetch({
 			ops: "signup",
 			link: `${api_base_url}/auth/signup`,
 			method: 'POST',
@@ -144,13 +144,13 @@ signupForm.addEventListener('submit', async (event) => {
 			},
 			body: signupFormState.values,
 		});
-	
-		if (data.code === 422) {
-			handleValidationErrors(signupForm, data);
-		} else if (data.code >= 400) {
-			handleError(titleSignupForm, data);
-		} else {
-			handleData("signup", data);
+
+		if (response.success) {
+			handleData("signup", response.data);
+		} else if (response.error.code === 422) {
+			handleValidationErrors(signupForm, response.error);
+		} else if (response.error.code >= 400) {
+			handleError(titleSignupForm, response.error);
 		}
 
 	} catch (error) {
@@ -194,23 +194,23 @@ document.querySelectorAll('form.signup .field-text input').forEach( field => {
 
 // **************** UTILS *********************
 
-function handleValidationErrors(form, data) {
-	Object.keys(data.errors).forEach(name => {
+function handleValidationErrors(form, error) {
+	Object.keys(error.errors).forEach(name => {
 		const field_error = form.querySelector(`input[name=${name}] + small`);
-		field_error.innerText = data.errors[name];
+		field_error.innerText = error.errors[name];
 		field_error.style.display = "block";
 	})
 }
 
-function handleError(title, data) {
+function handleError(title, error) {
 	const form_error = title.querySelector('small');
-	form_error.innerText = data.message;
+	form_error.innerText = error.message;
 	form_error.style.display = "block";
 }
 
 function handleData(from, data) {
 	const store = {};
-	store.authuser = data.user;
+	store.authuser = data.authuser;
 	store.tokens = data.tokens;
 	localStorage.setItem('data', JSON.stringify(store));
 	window.location.assign(`/index.html?from=${from}`);
@@ -242,17 +242,16 @@ const sendTokenToBackend = async (token, provider, method, from) => {
 	showProgressBar("progress-bar-1");
 
 	xhr.onload = async function() {
-		const data = JSON.parse(xhr.responseText);
-		console.log(data);
+		const response = JSON.parse(xhr.responseText);
+		console.log(response);
 
 		removeProgressBar("progress-bar-1");
 
-		if (data.code) {
-			showBanner(data);
-			return;
+		if (response.success) {
+			handleData("login", response.data);
+		} else {
+			showBanner(response.error);
 		}
-
-		handleData("login", data);
 	};
 
 	if (method === "urlencoded") {

@@ -85,7 +85,7 @@ adduserForm.addEventListener('submit', async (event) => {
 		showProgressBar();
 		adduserButton.disabled = true;
 
-		const data = await secureFetch({
+		const response = await secureFetch({
 			ops: "add user",
 			link: `${api_base_url}/users/${store.authuser.id}`,
 			method: 'POST',
@@ -96,15 +96,15 @@ adduserForm.addEventListener('submit', async (event) => {
 			body: adduserFormState.values,
 		});
 
-		if (data.code === 403) {
-			showBanner(data);
+		if (response.success) {
+			handleData(response.data.user);
+		} else if (response.error.code === 403) {
+			showBanner(response.error);
 			gotoLoginPage({ delay: true });
-		} else if (data.code === 422) {
-			handleValidationErrors(data);
-		} else if (data.code) {
-			handleError(data);
+		} else if (response.error.code === 422) {
+			handleValidationErrors(response.error);
 		} else {
-			handleData(data);
+			handleError(response.error);
 		}
 		
 	} catch (error) {
@@ -151,35 +151,35 @@ document.querySelectorAll('#adduser-form .field-select select').forEach( field =
 
 // **************** UTILS *********************
 
-function handleValidationErrors(data) {
-	Object.keys(data.errors).forEach(name => {
-		console.log(name)
-		if (name === "body" || name === "id") {
+function handleValidationErrors(error) {
+	Object.keys(error.errors).forEach(key => {
+		console.log(key)
+		if (key === "body" || key === "id") {
 			const form_error = document.querySelector(`.form-title > small`);
-			form_error.innerText += data.errors[name];
+			form_error.innerText += error.errors[key];
 			form_error.style.display = "block";
 
-		} else if (name === "country" || name === "gender") {
-			const field_error = adduserForm.querySelector(`select[name=${name}] + small`);
-			field_error.innerText = data.errors[name];
+		} else if (key === "country" || key === "gender") {
+			const field_error = adduserForm.querySelector(`select[name=${key}] + small`);
+			field_error.innerText = error.errors[key];
 			field_error.style.display = "block";
 
 		} else {
-			const field_error = adduserForm.querySelector(`input[name=${name}] + small`);
-			field_error.innerText = data.errors[name];
+			const field_error = adduserForm.querySelector(`input[name=${key}] + small`);
+			field_error.innerText = error.errors[key];
 			field_error.style.display = "block";
 		}
 	})
 }
 
-function handleError(data) {
+function handleError(error) {
 	const form_error = document.querySelector(".form-title > small")
-	form_error.innerText = data.message;
+	form_error.innerText = error.message;
 	form_error.style.display = "block";
 }
 
-function handleData(data) {
-	store.user = data;
+function handleData(user) {
+	store.user = user;
 	localStorage.setItem('data', JSON.stringify(store));
 	window.location.assign(`/index.html?from=adduser`);
 }

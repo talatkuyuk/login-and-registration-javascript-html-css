@@ -17,7 +17,7 @@ window.addEventListener('load', async (event) => {
 		const urlParams = new URLSearchParams(window.location.search);
 		const token = urlParams.get('token');
 
-		const data = await pureFetch({
+		const response = await pureFetch({
 			ops: "verify email",
 			link: `${api_base_url}/auth/verify-email`,
 			method: 'POST',
@@ -27,32 +27,34 @@ window.addEventListener('load', async (event) => {
 			body: { token },
 		});
 
-		if (data.code) {
+		if (response.success) {
+			popupTitle.innerText = "Your email is verified.";
+			popupBody.innerText = "Yo can navigate to login page.";
+			popupButton.style.display = "block";
+
+		} else {
 			popupTitle.innerText = "Oooops !";
 			popupBody.innerText = "Email verification is failed.";
 
-			if (data.code === 422)
-				result.innerText = data.errors.token;
-			else if (data.message.includes("expired")) {
+			const error = response.error;
+			
+			if (error.code === 422)
+				result.innerText = error.errors.token;
+			else if (error.message.includes("expired")) {
 				result.innerText = "The token is expired";
-			} else if (data.message.includes("jwt") || data.message.includes("signature")) {
+			} else if (error.message.includes("jwt") || error.message.includes("signature")) {
 				result.innerText = "The token is wrong";
 			} else {
-				result.innerText = data.message;
+				result.innerText = error.message;
 			}
 			
 			result.classList.remove(...result.classList);
 			result.classList.add("failure");
 			result.style.display = "block";
 
-			if (data.message.includes("jwt") || data.message.includes("signature") || data.message.includes("not valid")) {
+			if (error.message.includes("jwt") || error.message.includes("signature") || error.message.includes("not valid")) {
 				showBanner({message: "You can claim a new reset password link through the forgot password feature."});
 			}
-
-		} else {
-			popupTitle.innerText = "Your email is verified.";
-			popupBody.innerText = "Yo can navigate to login page.";
-			popupButton.style.display = "block";
 		}
 		
 	} catch (error) {

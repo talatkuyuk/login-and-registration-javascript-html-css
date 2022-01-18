@@ -86,7 +86,7 @@ window.addEventListener('load', async (event) => {
 		updateButton.disabled = true;
 
 	} catch (error) {
-		console.log (error);
+		console.log(error);
 	}
 });
 
@@ -101,7 +101,7 @@ updateuserForm.addEventListener('submit', async (event) => {
 		showProgressBar();
 		updateButton.disabled = true;
 
-		const data = await secureFetch({
+		const response = await secureFetch({
 			ops: "update user",
 			link: `${api_base_url}/users/${store.user.id}`,
 			method: 'PUT',
@@ -112,15 +112,15 @@ updateuserForm.addEventListener('submit', async (event) => {
 			body: updateuserFormState.values,
 		});
 
-		if (data.code === 403) {
-			showBanner(data);
+		if (response.success) {
+			handleData(response.data.user);
+		} else if (response.error.code === 403) {
+			showBanner(response.error);
 			gotoLoginPage({ delay: true });
-		} else if (data.code === 422) {
-			handleValidationErrors(data);
-		} else if (data.code) {
-			handleError(data);
+		} else if (response.error.code === 422) {
+			handleValidationErrors(response.error);
 		} else {
-			handleData(data);
+			handleError(response.error);
 		}
 		
 	} catch (error) {
@@ -181,37 +181,37 @@ okButton.addEventListener("click", () => {
 
 // **************** UTILS *********************
 
-function handleValidationErrors(data) {
-	Object.keys(data.errors).forEach(name => {
+function handleValidationErrors(error) {
+	Object.keys(error.errors).forEach(name => {
 		console.log(name)
 		if (name === "body" || name === "id") {
 			const form_error = document.querySelector(`.form-title > small`);
-			form_error.innerText += data.errors[name];
+			form_error.innerText += error.errors[name];
 			form_error.style.display = "block";
 
 		} else if (name === "country" || name === "gender") {
 			const field_error = updateuserForm.querySelector(`select[name=${name}] + small`);
-			field_error.innerText = data.errors[name];
+			field_error.innerText = error.errors[name];
 			field_error.style.display = "block";
 
 		} else {
 			const field_error = updateuserForm.querySelector(`input[name=${name}] + small`);
-			field_error.innerText = data.errors[name];
+			field_error.innerText = error.errors[name];
 			field_error.style.display = "block";
 		}
 	})
 }
 
-function handleError(data) {
+function handleError(error) {
 	const form_error = document.querySelector(".form-title > small")
-	form_error.innerText = data.message;
+	form_error.innerText = error.message;
 	form_error.style.display = "block";
 
-	showBanner(data);
+	showBanner(error);
 }
 
-function handleData(data) {
-	store.user = data;
+function handleData(user) {
+	store.user = user;
 	saveState();
 
 	updateButton.style.display = "none";

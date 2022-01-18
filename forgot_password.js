@@ -38,7 +38,7 @@ forgotpasswordForm.addEventListener('submit', async (event) => {
 		forgotpasswordButton.disabled = true;
 		input_email.disabled = true;
 
-		const data = await pureFetch({
+		const response = await pureFetch({
 			ops: "forgot password",
 			link: `${api_base_url}/auth/forgot-password`,
 			method: 'POST',
@@ -48,21 +48,22 @@ forgotpasswordForm.addEventListener('submit', async (event) => {
 			body: forgotpasswordFormState.values,
 		});
 
-		if (data.code === 403 || data.code === 404) {
-			showBanner(data);
-			handleError(data);
-			gotoLoginPage({ delay: true });
-		} else if (data.code === 422) {
-			handleValidationErrors(data);
-		} else if (data.code) {
-			handleError(data);
-		} else {
+		if (response.success) {
 			forgotpasswordButton.style.display = "none";
 			okButton.style.display = "initial";
 
 			form_error.innerText = "The reset password link has been sent to your mailbox.";
 			form_error.classList.add("success");
 			form_error.style.display = "block";
+			
+		} else if (response.error.code === 403 || response.error.code === 404) {
+			showBanner(response.error);
+			handleError(response.error);
+			gotoLoginPage({ delay: true });
+		} else if (response.error.code === 422) {
+			handleValidationErrors(response.error);
+		} else {
+			handleError(response.error);
 		}
 		
 	} catch (error) {
@@ -94,30 +95,30 @@ document.querySelectorAll('#forgotpassword-form .field-text input').forEach( fie
 
 // **************** UTILS *********************
 
-function handleValidationErrors(data) {
-	Object.keys(data.errors).forEach(name => {
-		console.log(name)
-		if (name === "body" || name === "id") {
+function handleValidationErrors(error) {
+	Object.keys(error.errors).forEach(key => {
+		console.log(key)
+		if (key === "body" || key === "id") {
 			const form_error = document.querySelector(`.form-title > small`);
-			form_error.innerText += data.errors[name];
+			form_error.innerText += error.errors[key];
 			form_error.style.display = "block";
 
 		} else {
-			const field_error = forgotpasswordForm.querySelector(`input[name=${name}] + small`);
-			field_error.innerText = data.errors[name];
+			const field_error = forgotpasswordForm.querySelector(`input[name=${key}] + small`);
+			field_error.innerText = error.errors[key];
 			field_error.style.display = "block";
 		}
 	})
 }
 
-function handleError(data) {
+function handleError(error) {
 	const form_error = document.querySelector(".form-title > small")
-	if (data.message.includes("Sandbox")) {
+	if (error.message.includes("Sandbox")) {
 		form_error.innerText = "The mail server has encountered a problem.";
-	} else if (data.message.includes("connect")) {
+	} else if (error.message.includes("connect")) {
 		form_error.innerText = "Check your internet connection.";
 	} else {
-		form_error.innerText = data.message;
+		form_error.innerText = error.message;
 	}
 	form_error.style.display = "block";
 }
