@@ -41,7 +41,7 @@ window.addEventListener('load', async (event) => {
 
 		if (from === null) {
 			//removeSpinner();return;
-			const data = await secureFetch({
+			const response = await secureFetch({
 				ops: "get authuser",
 				link: `${api_base_url}/authusers/${store.authuser.id}`,
 				method: 'GET',
@@ -52,20 +52,20 @@ window.addEventListener('load', async (event) => {
 			});
 
 			// check the response is an error
-			if (data.code) {
-				showBanner(data);
+			if (!response.success) {
+				showBanner(response.error);
 				gotoLoginPage({ delay: true });
 				return;
 			}
 
-			authuser = data;
+			authuser = response.data.authuser;
 
 			if (! authuser.isEmailVerified) {
 				showVerifyEmailContainer();
 				return;
 			}
 
-			const data2 = await secureFetch({
+			const response2 = await secureFetch({
 				ops: "get user",
 				link: `${api_base_url}/users/${authuser.id}`,
 				method: 'GET',
@@ -74,26 +74,29 @@ window.addEventListener('load', async (event) => {
 					'Content-Type': 'application/json',
 				},
 			});
-			
-			// if there is no user
-			if (data2.code === 404) {
-				saveState();
-				gotoPage("adduser.html?from=index");
-				return;
 
 			// check the response is an error
-			} else if (data2.code) {
-				showBanner(data2);
+			if (!response.success) {
+				
+				// if there is no user
+				if (response2.error.code === 404) {
+					saveState();
+					gotoPage("adduser.html?from=index");
+					return;
+				}
+
+				showBanner(response2.error);
 				gotoLoginPage({ delay: true });
 				return;
 			}
+			
 
-			store.user = data2;
+			store.user = response2.data.user;
 			localStorage.setItem('data', JSON.stringify(store));
 			console.log(store);
 
 			showEmailInHeader(authuser.email);
-			showBusinessCard(data2);
+			showBusinessCard(response2.data.user);
 			return;
 		}
 
@@ -132,7 +135,7 @@ window.addEventListener('load', async (event) => {
 		if (from === "login") {
 			authuser = store.authuser;
 
-			const data = await secureFetch({
+			const response = await secureFetch({
 				ops: "get user",
 				link: `${api_base_url}/users/${authuser.id}`,
 				method: 'GET',
@@ -142,15 +145,17 @@ window.addEventListener('load', async (event) => {
 				},
 			});
 
-			// if there is no user
-			if (data.code === 404) {
-				saveState();
-				gotoPage("adduser.html?from=index");
-				return;
-	
 			// check the response is an error
-			} else if (data.code) {
-				showBanner(data);
+			if (!response.success) {
+				
+				// if there is no user
+				if (response.error.code === 404) {
+					saveState();
+					gotoPage("adduser.html?from=index");
+					return;
+				}
+
+				showBanner(response.error);
 				gotoLoginPage({ delay: true });
 				return;
 			}
@@ -160,12 +165,12 @@ window.addEventListener('load', async (event) => {
 				return;
 			}
 	
-			store.user = data;
+			store.user = response.data.user;
 			localStorage.setItem('data', JSON.stringify(store));
 			console.log(store);
 
 			showEmailInHeader(authuser.email);
-			showBusinessCard(data);
+			showBusinessCard(response.data.user);
 			return;
 		}
 
@@ -197,7 +202,7 @@ emailButton.addEventListener('click', async (event) => {
 		emailButton.disabled = true;
 		showProgressBar();
 
-		const data = await secureFetch({
+		const response = await secureFetch({
 			ops: "send verification email",
 			link: `${api_base_url}/auth/send-verification-email`,
 			method: 'POST',
@@ -207,22 +212,22 @@ emailButton.addEventListener('click', async (event) => {
 			},
 		});
 	
-		if (data.code) {
-			if (data.message.includes("sandbox")) {
-				result.innerText = "The mail server has encountered a problem.";
-			} else if (data.message.includes("connect")) {
-				result.innerText = "Check your internet connection.";
-			} else {
-				result.innerText = data.message;
-			}
-			result.classList.remove(...result.classList);
-			result.classList.add("failure");
-			result.style.display = "block";
-
-		} else {
+		if (response.success) {
 			result.innerText = "The email has been send to your email box.";
 			result.classList.remove(...result.classList);
 			result.classList.add("success");
+			result.style.display = "block";
+
+		} else {
+			if (response.error.message.includes("sandbox")) {
+				result.innerText = "The mail server has encountered a problem.";
+			} else if (response.error.message.includes("connect")) {
+				result.innerText = "Check your internet connection.";
+			} else {
+				result.innerText = response.error.message;
+			}
+			result.classList.remove(...result.classList);
+			result.classList.add("failure");
 			result.style.display = "block";
 		}
 
