@@ -37,11 +37,10 @@ const statusChangeCallback = async function(response) {
 				name: result.name,
 				picture: result.picture.data.url,
 			};
+
+			console.log(payload);
 	
 			sendTokenToBackend(accessToken, "facebook", "bearer");
-	
-		} else {
-			// removeTheCard("facebook");
 		}
 		
 	} catch (error) {
@@ -51,25 +50,25 @@ const statusChangeCallback = async function(response) {
 
 
 var finished_rendering = function() {
-	console.log("finished rendering plugins");
+	console.log("finished rendering facebook button");
 	document.querySelectorAll('#spinner').forEach(e => e.remove());
 }
 
 
 const fbLogin = () => FB.login(function(response) {
-	console.log("Logged in is successfull");
+	console.log("Facebook logged in is successfull");
 	console.log(response);
 	if (response.authResponse) {
 		accessToken = response.authResponse.accessToken;
 	} else {
-		console.log('User cancelled login or did not fully authorize.');
+		console.log('User cancelled facebook login or did not fully authorize.');
 	}
 }, {scope: 'email'});
 
 
 const fbGetProfile = (userID) => {
 	return new Promise((resolve, reject) => {
-		console.log('Welcome!  Fetching your profile.... ');
+		console.log('Welcome!  Fetching your facebook profile.... ');
 
 		try {
 			FB.api(`/${userID}?fields=name,email,picture`, function (response) {
